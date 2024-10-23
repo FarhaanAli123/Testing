@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Appointment Details</title>
+    <style>
+        header{
+            padding: 3%;
+            text-align: center;
+        }
+        body {
+            font-family: Arial, sans-serif;
+        }
+        h1{
+            font-family:Verdana, Geneva, Tahoma, sans-serif;
+        }
+        table {
+            width: 50%;
+            border-collapse: collapse;
+            margin-left: 2%;
+            margin-right: 5%;
+        }
+        th, td tr{
+            padding: 2%;
+            text-align: left;
+        }
+        h2{
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>SmartWard A Smart Clinic</h1>
+    </header>
+    <hr>
+
+    <h2>Appointment Details</h1>
+
+    <table>
+        <tr>
+            <th>Patient ID:</th>
+            <td>{{ appointment.patient.id }}</td>
+        </tr>
+        <tr>
+            <th>Patient Name:</th>
+            <td>{{ appointment.patient.first_name }} {{ appointment.patient.last_name }}</td>
+        </tr>
+        <tr>
+            <th>Appointment Time:</th>
+            <td>{{ appointment.slot.start_time }} - {{appointment.slot.end_time}}</td>  <!-- Simplified -->
+        </tr>
+        <tr>
+            <th>Appointment Date:</th>
+            <td>{{ appointment.slot.date}}</td>  <!-- Simplified -->
+        </tr>
+    </table>
+    <hr>
+
+    <p>This is your Booking Reciept, please show to the receptionist on the day of your appointment</p>
+</body>
+</html>

@@ -1,0 +1,143 @@
+{% extends "layout_doc.html" %}
+{% load static %}
+
+{% block title %}Doctor Dashboard{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body{
+            background-color: #D0D7E1;
+            overflow-x: hidden;
+            width: 100%;
+            height: 100%;
+        }
+        h1,h2{
+            font-family: 'Courier New', Courier, monospace;
+        }
+        td{
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            padding-inline: 5%;
+        }
+        th{
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            padding-inline: 5%;
+            border-bottom: 1px solid #D0D7E1 ;
+        }
+        table{
+            padding-inline: 10%;
+            width: 100%;
+            padding: 5%;
+        }
+        #containerPro{
+            display: flex;
+            padding-inline: 10%;
+            
+        }
+        #nav{
+            padding: 4%;
+            padding-bottom: 15%;
+            background-color: #072D4A;
+            border-radius: 20px;
+            width: 40%;
+        }
+        #appt{
+            background-image: url("{% static 'appointment.png' %}");
+            width: 60%;
+            height: 100%;
+            background-size: 100%;
+            background-repeat: no-repeat;
+            text-align:center;
+        }
+        #visit{
+            background-image: url("{% static 'visit.png' %}");
+            width: 60%;
+            height: 100%;
+            background-size: 100%;
+            background-repeat: no-repeat;
+            text-align:center;
+        }
+        #container{
+            background-color: #9CCDDB;
+            padding: 4%;
+            text-align: center;
+            margin-left: 5%;
+            margin-right: 3%;
+            border-radius: 20px;
+            width: 80%;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        #nav a{
+            text-align: center;
+            color: #072D4A;
+            text-decoration: none;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            padding-inline-end: 2%;
+        }
+        #lnk{
+            background-color: white;
+            width: 60%;
+            
+        }
+        #lnk:hover{
+            text-decoration: underline;
+            opacity: 0.7;
+        }
+        #appt:hover{
+            opacity: 0.7;
+        }
+        #visit:hover{
+            opacity: 0.7;
+        }
+        
+    </style>
+</head>
+<body>
+    <h1>Welcome, {{ user.first_name }}👋</h1>
+    {% if user.profile_picture %}
+    <img src="{{ user.profile_picture.url }}" alt="Profile Picture" style="width: 150px; height: 150px; border-radius: 75px;">
+    {% else %}
+    <img src="{% static 'img_PH.png' %}" alt="Profile Picture" style="width: 150px; height: 150px; border-radius: 75px;">
+    {% endif %}
+
+    <div id="containerPro">
+        <div id="nav">
+            <a href="{% url 'doctor_appointments' %}"><div id="appt"></div><div id="lnk">My Appointments</div></a>
+            <a href="{% url 'doctor_view_visits' %}"><div id="visit"></div><div id="lnk">My Visits</div></a>
+        </div>
+        <div id="container">
+            <h2>Your Shifts</h2>
+            <table>
+                <tr>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    
+                </tr>
+                {% for shift in shifts %}
+                <tr>
+                    <td>{{ shift.start_time|date:"d/m/y h:i A" }}</td>
+                    <td>{{ shift.end_time|date:"d/m/y h:i A" }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="3">No shifts assigned.</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+<hr>
+
+
+<hr>
+
+
+</body>
+</html>
+{% endblock %}

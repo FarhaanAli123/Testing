@@ -1,0 +1,80 @@
+{% extends "layout1.html" %}
+{% load static %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <style>
+        body{
+            background-color: #D0D7E1;
+            overflow-x: hidden;
+            width: 100%;
+            height: 100%;
+        }
+        #container{
+            background-color:#064469;
+            width: 35%;
+            height: 50%;
+            padding: 5%;
+            margin-top: 2%;
+            margin-bottom: 5%;
+            border-radius: 10px;
+            border-style:groove;
+            border-width: 8px;
+            border-color: aliceblue;
+            margin-left: 26%;
+            color: aliceblue;
+            
+        }
+        h2{
+            color: aliceblue;
+            font-family: 'Lucida Sans';
+            text-align: center;
+        }
+        #user{
+            padding: 5%;
+            margin-left: 18%;
+        }
+        #pass{
+            padding: 5%;
+            margin-left: 18%;
+        }
+        button{
+            float: right;
+            padding: 2%;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h2>Login</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <div id="user">
+            <label for="username">Username:</label>
+            <input type="text" name="username" required>
+        </div>
+        <div id="pass">
+            <label for="password">Password:</label>
+            <input type="password" name="password" required>
+        </div>
+        <button type="submit">Login</button>
+    </form>
+    {% if messages %}
+        <ul>
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    </div>
+    
+</body>
+{% endblock %}
+</html>

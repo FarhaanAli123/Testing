@@ -1,0 +1,71 @@
+{% extends "layout_doc.html" %}
+{% load static %}
+
+{% block title %}Attend Visit{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body{
+            background-color: #D0D7E1;
+            overflow-x: hidden;
+            width: 100%;
+            height: 100%;
+        }
+        #vitals{
+            background-color: #9CCDDB;
+            padding: 3%;
+            width: 30%;
+        }
+        h2, h1{
+            text-align: center;
+        }
+        h2{
+            text-decoration: underline;
+        }
+        #main{
+            display: flex;
+            background-color: #072D44;
+            padding: 2%;
+        }
+        #container{
+            color:#D0D7E1;
+            padding-left: 10%;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Attend Visit for {{ visit.patient.first_name }} {{ visit.patient.last_name }}</h1>
+
+    <div id="main">
+        <div id="vitals">
+            <h2>Recorded Vitals for this Visit</h2>
+            <p>Date: {{ visit.created_at }}</p>
+            <p>Weight: {{ visit.weight }} kg</p>  
+            <p>Temperature: {{ visit.temperature }} °C</p>   
+            <p>Blood Pressure: {{ visit.blood_pressure }}</p>  
+        </div>
+            
+    <div id="container">
+        <form method="post">
+            {% csrf_token %}
+            <div>
+                <label for="id_doctor_notes">Doctor's Description</label><br>
+                {{ form.doctor_notes }}
+            </div>
+            <button type="submit">Save Notes</button>
+        </form>
+    </div>
+    </div>
+    
+    
+
+    <a href="{% url 'doctor_view_visits' %}">Back to Visits</a>
+</body>
+</html>
+{% endblock %}

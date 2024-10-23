@@ -1,0 +1,73 @@
+{% extends "layout_rec.html" %}
+{% load static %}
+
+{% block title %}Booking{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body{
+            background-color: #D0D7E1;
+        }
+        #container{
+            color: aliceblue;
+            background-color: #072D44;
+            padding: 2%;
+            width: 70%;
+            margin-left: 12%;
+            margin-top: 3%;
+            margin-bottom: 2%;
+            padding-bottom: 5%;
+        }
+        h1, h2{
+            text-align: center;
+            font-family:Arial, Helvetica, sans-serif;
+        }
+        button{
+            float: inline-end;
+            cursor: pointer;
+            padding: 1%;
+        }
+        #slotbox{
+            color: aliceblue;
+            background-color: #072D44;
+            padding: 2%;
+            width: 70%;
+            margin-left: 12%;
+            margin-top: 3%;
+            margin-bottom: 5%;
+            padding-bottom: 5%;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="container">
+        <h1>Book an Appointment for {{ appointment_type.name }}</h1>
+
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Book Appointment</button>
+        </form>
+    </div>
+
+ <div id="slotbox">
+    <h2>Available Slots</h2>
+    <ul>
+        {% for slot in available_slots %}
+        <li>{{ slot.start_time }} - {{ slot.end_time }}</li>
+        {% empty %}
+        <li>No slots available.</li>
+        {% endfor %}
+    </ul>
+ </div>
+
+
+ <a href="{% url 'specialized_appointment_list' %}">View List</a>
+
+</body>
+{% endblock %}
+</html>

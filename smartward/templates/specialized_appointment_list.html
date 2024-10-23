@@ -1,0 +1,122 @@
+{% extends "layout_rec.html" %}
+{% load static %}
+
+{% block title %}Booking{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Specialized Appointments</title>
+    <style>
+        body{
+            background-color: #D0D7E1;
+            overflow-x: hidden;
+            width: 100%;
+            height: 100%;
+            margin-left: 0;
+        }
+        #container{
+            background-color: #9CCDDB;
+            padding: 2%;
+            text-align: center;
+            margin-left: 3%;
+            margin-right: 3%;
+            width: 94%;
+            max-height: 500px;
+            overflow-y: auto;
+            border: 2px solid black;
+        }
+        table{
+            border: 1px black solid;
+            border-collapse: collapse;
+            width: 100%;
+            table-layout: fixed;
+        }
+        td{
+            border: 1px black solid;
+            padding: 1%;
+        }
+        td:hover{
+            border: 2px black solid;
+        }
+        th{
+            border: 1.5px black solid;
+            padding: 1%;
+        }
+        #box{
+            background-color: #072D44;
+            color: #D0D7E1;
+            padding: 3%;
+            margin: 2%;
+        }
+        #lnk{
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center; font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">Special Appointments</h1>
+    <div id="box">
+        <h2 style="text-decoration: underline; text-align: center;">Appointment Types</h2>
+        <ul>
+            {% for appointment_type in appointment_types %}
+            <li style="list-style-type:lower-roman;">
+                <a id="lnk" href="{% url 'book_specialized_appointment' appointment_type.id %}">
+                    {{ appointment_type.name }}
+                </a>
+                <p class="description">{{ appointment_type.description }}</p>
+            </li>
+            {% endfor %}
+        </ul>
+    
+        {% if messages %}
+        <div>
+            {% for message in messages %}
+                <div class="alert {% if message.tags == 'error' %}alert-error{% else %}alert-success{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+    
+
+    <h2 style="margin-left:8%;">Upcoming Appointments</h2>
+    <div id="container">
+        <table border="1">
+            <tr>
+                <th>Patient ID</th>
+                <th>Time</th>
+                <th>Booked At</th>
+                <th>Actions</th>
+            </tr>
+            {% for specialbooking in specialbookings %}
+            <tr>
+                <td>{{ specialbooking.patient }}</td>
+                <td>{{ specialbooking.slot }}</td>
+                <td>{{ specialbooking.booked_at }}</td>
+                <td>
+                    <a href="{% url 'delete_specialized_appointment' specialbooking.id %}">Delete</a>|
+                    <form method="POST" action="{% url 'sp_print_appointment' specialbooking.id %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit">Print</button>
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4">No appointments booked.</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    
+
+
+    
+
+    <a href="{% url 'patient_list' %}">Back to Patients</a>
+</body>
+</html>
+{% endblock %}

@@ -1,0 +1,125 @@
+{% extends "layout_rec.html" %}
+{% load static %}
+
+{% block title %}Book Appointment{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body{
+            background-color: #D0D7E1;
+            overflow-x: hidden;
+            width: 100%;
+            height: 100%;
+        }
+        #book{
+            background-color: #072D44;
+            color: white;
+            padding: 3%;
+            display: block;
+            padding-inline: 10%;
+            width: 50%;
+            margin-left: 20%;
+        }
+        #bookbtn{
+            width: 15%;
+            height: 8%;
+            align-self:self-end;
+        }
+        #container{
+            background-color: #9CCDDB;
+            padding: 2%;
+            text-align: center;
+            margin-left: 3%;
+            margin-right: 3%;
+            width: 94%;
+            max-height: 500px;
+            overflow-y: auto;
+            border: 2px solid black;
+        }
+        table{
+            border: 1px black solid;
+            border-collapse: collapse;
+            width: 100%;
+            table-layout: fixed;
+        }
+        td{
+            border: 1px black solid;
+            padding: 1%;
+        }
+        td:hover{
+            border: 2px black solid;
+        }
+        th{
+            border: 1.5px black solid;
+            padding: 1%;
+        }
+        
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center; font-family: Georgia, 'Times New Roman', Times, serif;">Book Appointment</h1>
+    <br><a href="{% url 'specialized_appointment_list' %}">Special-Bookings</a>
+    <hr>
+    <form id="book" method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button id="bookbtn" type="submit">Book</button>
+    </form>
+
+    {% if messages %}
+    <ul>
+    {% for message in messages %}
+        <li id="msg">{{ message }}</li>
+    {% endfor %}
+    </ul>
+    {% endif %}
+
+    <h2>Upcoming Bookings</h2>
+    <div id="container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Patient ID</th>
+                    <th>Patient</th>
+                    <th>Doctor</th>
+                    <th>Slot</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for booking in upcoming_bookings %}
+                    <tr>
+                        <td>{{ booking.patient.id}}</td>
+                        <td>{{ booking.patient.first_name }} {{ booking.patient.last_name }}</td>
+                        <td>{{ booking.doctor.username }}</td>
+                        <td>{{ booking.slot.start_time }} - {{ booking.slot.end_time }}</td>
+                        <td>{{ booking.slot.date }}</td>
+                        <td>
+                            <form method="POST" action="{% url 'delete_doctor_appointment' booking.id %}" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit">Delete</button>
+                            </form> |
+                            <form method="POST" action="{% url 'print_appointment' booking.id %}" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit">Print</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="5">No upcoming bookings.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+</body>
+{% endblock %}
+</html>

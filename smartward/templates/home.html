@@ -1,0 +1,56 @@
+{% extends "layout1.html" %}
+{% load static %}
+
+{% block title %}SmartWard{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background-color:#D0D7E1;
+            color: white;
+            
+        }
+        #msg{
+            color: #064469;
+        }
+        a {
+            color:white;
+            font-weight: bolder;
+            text-decoration: none;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        #links {
+            background-color:#064469;
+            margin-left: 40%;
+            margin-right: 40%;
+            padding: 10%;
+            display: block;
+            padding-inline: 5%;
+            opacity: 0.8;
+            text-align: center;
+            border-radius: 40px;
+            margin-top: 1%;
+        }
+    </style>
+</head>
+<body>
+    {% if messages %}
+    <ul>
+    {% for message in messages %}
+        <li id="msg">{{ message }}</li>
+    {% endfor %}
+    </ul>
+{% endif %}
+    <div id="links">
+        <a href="{% url 'login' %}">Login</a>
+        <br><br><br>
+        <a href="/admin/login/">Admin Login</a>
+    </div>
+</body>
+{% endblock %}
+</html>

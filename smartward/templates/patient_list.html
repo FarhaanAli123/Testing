@@ -1,0 +1,141 @@
+{% extends "layout_rec.html" %}
+{% load static %}
+
+{% block title %}Patients{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Patient List</title>
+    <style>
+        body{
+            background-color: #D0D7E1;
+            overflow-x: hidden;
+            width: 100%;
+            height: 100%;
+        }
+        h1{
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            text-align: center;
+        }
+        p{
+            color: black;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 2px solid #ddd;
+        }
+        th {
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            background-color: #f2f2f2;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 5px;
+        }
+        .action-buttons form {
+            display: inline;
+        }
+        .search-bar {
+            margin-bottom: 20px;
+        }
+        .search-bar input[type="text"] {
+            padding: 8px;
+            width: 200px;
+        }
+        .search-bar button {
+            padding: 8px;
+        }
+        .suggestion {
+            color: #555;
+            margin-bottom: 15px;
+        }
+        .suggestion strong {
+            color: #007BFF;
+        }
+        #link1{
+            color: rgb(41, 41, 107);
+            font-family:'Times New Roman', Times, serif;
+        }
+        #container{
+            align-self: center;
+            background-color: #9CCDDB;
+            padding: 2%;
+            text-align: center;
+            margin-left: 3%;
+            margin-right: 3%;
+            width: 90%;
+            max-height: 500px;
+            overflow-y: auto;
+            border: 2px solid black;
+        }
+        #msg{
+            color: green;
+            font-size: 0.9rem;
+        }
+        
+    </style>
+</head>
+<body>
+
+    <div class="search-bar">
+        <form method="get" action="{% url 'patient_list' %}">
+            <input type="text" name="q" placeholder="Search by ID, name, or contact" value="{{ request.GET.q }}">
+            <button type="submit">Search</button>
+        </form>
+        {% if suggested_query %}
+            <p>Did you mean: <a href="{% url 'patient_list' %}?q={{ suggested_query }}">{{ suggested_query }}</a>?</p>
+        {% endif %}
+    </div>
+
+    
+
+<a id="link1" href="{% url 'add_patient' %}">Add New Patient</a>
+
+{% if messages %}
+    <ul>
+    {% for message in messages %}
+        <li id="msg">{{ message }}</li>
+    {% endfor %}
+    </ul>
+{% endif %}
+
+    <h1>Patients</h1>
+    <div id="container">
+        <table>
+            <tr>
+                <th>Patient ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Actions</th>
+            </tr>
+            {% for patient in patients %}
+            <tr>
+                <td>{{ patient.id }}</td>
+                <td>{{ patient.first_name }}</td>
+                <td>{{ patient.last_name }}</td>
+                <td class="action-buttons">
+                    <a id="link1" href="{% url 'patient_detail' patient.id %}">Details</a>|
+                    <a id="link1" href="{% url 'update_patient' patient.id %}">Update</a>
+                    
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7">No patients found.</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    
+
+
+</body>
+{% endblock %}
+</html>

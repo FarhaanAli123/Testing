@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Visit</title>
+</head>
+<body>
+    <h1>Create Visit for {{ patient.first_name }} {{ patient.last_name }}</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit Visit</button>
+    </form>
+</body>
+</html>

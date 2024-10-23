@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Patient Details</title>
+    <style>
+        .patient-detail {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        .patient-detail h1 {
+            margin-top: 0;
+        }
+        .patient-detail table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .patient-detail th, .patient-detail td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        .patient-detail th {
+            background-color: #f2f2f2;
+        }
+        .patient-detail .actions {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="patient-detail">
+    <h1>Patient Details: {{ patient.first_name }} {{ patient.last_name }}</h1>
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <td>{{ patient.id }}</td>
+        </tr>
+        <tr>
+            <th>First Name</th>
+            <td>{{ patient.first_name }}</td>
+        </tr>
+        <tr>
+            <th>Last Name</th>
+            <td>{{ patient.last_name }}</td>
+        </tr>
+        <tr>
+            <th>Address</th>
+            <td>{{ patient.address }}</td>
+        </tr>
+        <tr>
+            <th>Phone Contact</th>
+            <td>{{ patient.phone_contact }}</td>
+        </tr>
+        <tr>
+            <th>Emergency Contact</th>
+            <td>{{ patient.emergency_contact }}</td>
+        </tr>
+        <tr>
+            <th>Date of Birth</th>
+            <td>{{ patient.dob }}</td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td>{{ patient.email }}</td>
+        </tr>
+        <tr>
+            <th>Medical Conditions</th>
+            <td>{{ patient.medical_conditions }}</td>
+        </tr>
+    </table>
+
+    <div class="actions">
+        <a href="{% url 'update_patient' patient.id %}">Update Patient</a>
+        <a href="{% url 'patient_list' %}">Back to Patient List</a>
+        <a href="{% url 'receptionist_dashboard' %}">Back to Dashboard</a>
+    </div>
+</div>
+
+</body>
+</html>

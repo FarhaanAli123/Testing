@@ -1,0 +1,100 @@
+{% extends "layout_doc.html" %}
+{% load static %}
+
+{% block title %}Doctor Visits{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body{
+            background-color: #D0D7E1;
+            overflow-x: hidden;
+            width: 100%;
+            height: 100%;
+        }
+        h2, h1{
+            text-align: center;
+        }
+        #lnk{
+            color: blue;
+        }
+        table{
+            border-collapse: collapse;
+            width: 100%;
+        }
+        #container{
+            align-self: center;
+            background-color: #d0e5eb;
+            padding: 2%;
+            text-align:start;
+            margin-left: 10%;
+            width: 35%;
+            max-height: 300px;
+            overflow-y: auto;
+            border: 2px solid black;
+        }
+        #main{
+            display: flex;
+        }
+        #seachDiv{
+            padding: 4%;
+            background-color: #072D44;
+            margin-left: 10%;
+            color: white;
+            font-weight: bolder;
+        }
+        tr,td{
+            padding: 1%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Your Visits</h1><hr>
+
+    <div id="main">
+        <div id="seachDiv">
+            <form method="GET" action="{% url 'doctor_view_visits' %}">
+                <input type="text" name="q" placeholder="Search by patient ID, name, or contact" value="{{ query|default_if_none:'' }}">
+                <button type="submit">Search</button>
+            </form>
+            {% if suggested_query %}
+                <p>Did you mean: <strong>{{ suggested_query }}</strong>?</p>
+            {% endif %}
+        </div>
+
+        <div id="container">
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Patient</th>
+                        <th>Visit Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for visit in visits %}
+                    <tr>
+                        <td>{{ visit.patient.first_name }} {{ visit.patient.last_name }}</td>
+                        <td>{{ visit.created_at }}</td>
+                        <td>
+                            <a id="lnk" href="{% url 'doctor_attend_visit' visit.id %}">Attend Visit</a>|
+                            <a id="lnk" href="{% url 'patient_detail' visit.patient.id %}">View Details</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6">No visits found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+        
+    
+</body>
+</html>
+{% endblock %}

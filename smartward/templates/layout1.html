@@ -1,0 +1,68 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <style>
+        body{
+            overflow-x: hidden;
+        }
+        footer{
+            color: white;
+            background-color: black;
+            padding: 4%;
+            margin-bottom: 0%;
+            margin-top: 2%;
+            width: 100%;
+        }
+        #logo {
+            background-image: url("{% static 'logo_sw.jpg' %}");
+            width: 100px;
+            height: 100px;
+            border: 1px solid;
+            background-repeat: no-repeat;
+            background-size: contain;
+            border-radius: 100%;
+        }
+        header{
+            background-color: #5790AB;
+            padding: 1%;
+            border-radius: 10px;
+            width: 100%;
+        }
+        li{
+            text-decoration: none;
+            list-style-type: none;
+            padding-inline-end: 20%;
+        }
+        ul{
+            display: flex;
+        }
+        #h1R{
+            font-family:Verdana, Geneva, Tahoma, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <ul>
+            <li>
+                <div id="head">
+                <div id="logo"></div>
+            </div></li>
+            <li>
+                <h1 id="h1R">SmartWard A Smart Clinic</h1>
+            </li>
+        </ul>
+        
+    </header>
+    {% block content %}
+    {% endblock %}
+    <footer>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vitae praesentium tempora odio pariatur 
+        perferendis impedit facilis voluptatibus ducimus ipsam ipsa? Perspiciatis eos modi libero, reprehenderit
+         vitae qui sint laboriosam perferendis?</footer>
+    </html>
+</body>

@@ -1,0 +1,32 @@
+{% extends "layout_nurse.html" %}
+{% load static %}
+
+{% block title %}Nurse Dashboard{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body{
+            background-color: #D0D7E1;
+            overflow-x: hidden;
+            width: 100%;
+            height: 100%;
+        }
+        h1{
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+    </style>
+
+</head>
+<body>
+    <h1>Welcome, {{ user.username }}👋</h1>
+    <p>Your ID Number: {{ user.id_number }}</p> 
+    <p>This is your personalized dashboard.</p>
+    <hr>
+    <a href="{% url 'patient_visit_list'%}">Create Visit</a>
+</body>
+</html>
+{% endblock %}

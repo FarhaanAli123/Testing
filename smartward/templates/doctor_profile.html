@@ -1,0 +1,46 @@
+{% extends "layout_doc.html" %}
+{% load static %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    
+</head>
+<h1>Doctor Profile</h1>
+<body>
+    
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <h2>Profile Information</h2>
+    {{ profile_form.as_p }}
+
+    <button type="submit">Update Profile</button>
+    
+{% if messages %}
+<div>
+    {% for message in messages %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+</div>
+{% endif %}
+</form>
+
+<h2>Change Password</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ password_form.as_p }}
+    <button type="submit">Change Password</button>
+</form>
+
+<a href="{% url 'doctor_dashboard' %}">Back to Dashboard</a>
+
+</body>
+</html>
+{% endblock %}

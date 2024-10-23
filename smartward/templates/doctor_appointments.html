@@ -1,0 +1,99 @@
+{% extends "layout_doc.html" %}
+{% load static %}
+
+{% block title %}Appoinments{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Appointments</title>
+    <style>
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+        }
+        .alert-success {
+            color: #155724;
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+        }
+        body{
+            background-color: #D0D7E1;
+            overflow-x: hidden;
+            width: 100%;
+            height: 100%;
+        }
+        h1,h2{
+            font-family: 'Courier New', Courier, monospace;
+        }
+        td{
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            padding-inline: 5%;
+        }
+        th{
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            padding-inline: 5%;
+            border-bottom: 1px solid #D0D7E1 ;
+        }
+        table{
+            padding-inline: 10%;
+            width: 100%;
+            padding: 5%;
+        }
+        #container{
+            background-color: #9CCDDB;
+            padding: 2%;
+            text-align: center;
+            margin-left: 10%;
+            margin-right: 10%;
+            width: 80%;
+            max-height: 500px;
+            overflow-y: auto;
+            border: 2px solid black;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Your Appointments</h1>
+
+{% if messages %}
+    <div>
+        {% for message in messages %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+<div id="container">
+    <table>
+        <tr>
+            <th>Patient Name</th>
+            <th>Appointment Time/Date</th>
+        </tr>
+        {% for appointment in appointments %}
+        <tr>
+            <td>{{ appointment.patient.first_name }} {{ appointment.patient.last_name }}</td>
+            <td>{{ appointment.slot.start_time}}-{{ appointment.slot.end_time}}  {{ appointment.slot.date}}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="2">No appointments booked.</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+
+<a href="{% url 'doctor_dashboard' %}">Back to Dashboard</a>
+
+
+</body>
+</html>
+{% endblock %}
